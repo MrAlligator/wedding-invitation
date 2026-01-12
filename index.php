@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Undangan Pernikahan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://unpkg.com/swiper@10/swiper-bundle.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #0d0d0d;
+            --pink: #e91e63;
+            --soft-pink: #ffb6c1;
+            --gold: #d4af37;
+            --white: #fff
+        }
+
+        [data-theme="gold"] {
+            --pink: var(--gold);
+            --soft-pink: #f5e6b3
+        }
+
+        html {
+            touch-action: manipulation;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Poppins, sans-serif;
+            background: linear-gradient(180deg, var(--black), #1a1a1a);
+            padding-bottom: env(safe-area-inset-bottom);
+            color: #fff
+        }
+
+        body.lock-scroll {
+            overflow: hidden
+        }
+
+        section {
+            padding: 90px 20px;
+            text-align: center;
+            position: relative
+        }
+
+        section.bg-soft::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1400') center/cover fixed no-repeat;
+            opacity: .18
+        }
+
+        section.bg-soft>* {
+            position: relative
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--soft-pink)
+        }
+
+        .divider {
+            width: 120px;
+            height: 3px;
+            background: var(--pink);
+            margin: 25px auto
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400') center/cover no-repeat;
+            position: relative
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .55)
+        }
+
+        .hero>* {
+            position: relative
+        }
+
+        /* OPENING */
+        .opening {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: .8s
+        }
+
+        .opening.hide {
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .opening-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1529634897989-8d0bdbd5b48d?q=80&w=1200') center/cover;
+            opacity: .3
+        }
+
+        .opening-content {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            animation: pulse 3s infinite
+        }
+
+        .opening-ring {
+            width: 90px;
+            margin-bottom: 20px;
+            animation: ring 4s infinite
+        }
+
+        .opening button {
+            margin-top: 30px;
+            padding: 14px 40px;
+            border-radius: 40px;
+            border: none;
+            background: var(--pink);
+            color: #fff;
+            width: 100%;
+            max-width: 260px;
+            cursor: pointer
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.05)
+            }
+        }
+
+        @keyframes ring {
+            0% {
+                transform: rotate(0) scale(1)
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.05)
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1)
+            }
+        }
+
+        /* WEDDING OF */
+        .wedding-section {
+            min-height: 100vh;
+            min-height: 100svh;
+            background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1400') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative
+        }
+
+        .wedding-section .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .6)
+        }
+
+        .wedding-content {
+            position: relative;
+            z-index: 2
+        }
+
+        .subtitle {
+            letter-spacing: 4px;
+            color: #f48fb1
+        }
+
+        .couple-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 56px
+        }
+
+        .couple-name span {
+            color: #f06292
+        }
+
+        /* COUNTDOWN */
+        .event-box {
+            max-width: 700px;
+            margin: auto;
+            background: rgba(0, 0, 0, .45);
+            padding: 40px;
+            border-radius: 20px
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px
+        }
+
+        .countdown div {
+            background: rgba(255, 255, 255, .1);
+            padding: 18px;
+            border-radius: 14px
+        }
+
+        /* FLOATING NAV */
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            z-index: 9998
+        }
+
+        .floating-nav button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .floating-nav button:hover {
+            background: var(--pink);
+            transform: translateY(-4px)
+        }
+
+        .opening:not(.hide)~.floating-nav {
+            display: none
+        }
+
+        /* PETALS */
+        .petal {
+            position: fixed;
+            top: -10%;
+            animation: fall linear infinite;
+            pointer-events: none
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg)
+            }
+        }
+
+        /* =========================
+            RESPONSIVE MOBILE
+        ========================= */
+
+        /* HP kecil (≤360px) */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .couple-name {
+                font-size: 36px;
+            }
+
+            .opening h1 {
+                font-size: 22px;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* HP umum (≤480px) */
+        @media (max-width: 480px) {
+            section {
+                padding: 70px 16px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .event-box {
+                padding: 24px;
+            }
+
+            .countdown span {
+                font-size: 26px;
+            }
+        }
+
+        /* Tablet portrait (≤768px) */
+        @media (max-width: 768px) {
+            .couple-name {
+                font-size: 44px;
+            }
+
+            .timeline {
+                padding: 0 10px;
+            }
+        }
+
+        /* Floating Nav Mobile */
+        @media (max-width: 600px) {
+            .floating-nav {
+                bottom: 12px;
+                gap: 6px;
+                padding: 8px 10px;
+            }
+
+            .floating-nav button {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 420px) {
+
+            .hero h1,
+            .couple-name {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body class="lock-scroll" data-theme="pink">
+
+    <?php
+        $pria = "Rizki Widya Pratama";
+        $wanita = "Arrum Fajar Anggita";
+        $tanggal = "2026-06-20";
+    ?>
+
+    <!-- OPENING -->
+    <div id="opening" class="opening">
+        <div class="opening-bg"></div>
+        <div class="opening-content">
+            <img class="opening-ring" src="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+            <h1><?= $pria ?> & <?= $wanita ?></h1>
+            <p>Kepada Yth.</p>
+            <h3 id="guestName">Tamu Undangan</h3>
+            <button onclick="openInvitation()">Buka Undangan</button>
+        </div>
+    </div>
+
+    <section id="wedding-of" class="wedding-section">
+        <div class="overlay"></div>
+        <div class="wedding-content">
+            <p class="subtitle">Kami Mengundang Anda</p>
+            <p class="subtitle">THE WEDDING OF</p>
+            <h1 class="couple-name"><?= $pria ?> <span>&</span> <?= $wanita ?></h1>
+            <p>Sabtu, 20 Juni 2026</p>
+        </div>
+    </section>
+
+    <section id="countdown" class="bg-soft">
+        <h2>Save The Date</h2>
+        <div class="divider"></div>
+        <div class="event-box countdown">
+            <div><span id="cd-days">0</span><small>Days</small></div>
+            <div><span id="cd-hours">0</span><small>Hours</small></div>
+            <div><span id="cd-mins">0</span><small>Minutes</small></div>
+            <div><span id="cd-secs">0</span><small>Seconds</small></div>
+        </div>
+    </section>
+
+    <section id="lovestory" class="bg-soft">
+        <h2 data-aos="fade-up">Love Story</h2>
+        <div class="divider"></div>
+        <div class="timeline">
+            <div data-aos="fade-right"><strong>2019</strong> – Pertemuan pertama</div>
+            <div data-aos="fade-left"><strong>2022</strong> – Menjalin hubungan</div>
+            <div data-aos="fade-right"><strong>2025</strong> – Lamaran</div>
+            <div data-aos="fade-left"><strong>2026</strong> – Hari Bahagia</div>
+        </div>
+    </section>
+
+    <section id="gallery" class="bg-soft">
+        <h2 data-aos="fade-up">Galeri</h2>
+        <div class="divider"></div>
+        <div class="swiper" data-aos="zoom-in">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img loading="lazy" src="https://picsum.photos/800?1"></div>
+                <div class="swiper-slide"><img loading="lazy" src="https://picsum.photos/800?2"></div>
+                <div class="swiper-slide"><img loading="lazy" src="https://picsum.photos/800?3"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="maps">
+        <h2 data-aos="fade-up">Lokasi Acara</h2>
+        <div class="divider"></div>
+        <div class="event-box" data-aos="zoom-in"> <iframe loading="lazy" src="https://www.google.com/maps?q=Jakarta&output=embed" width="100%" height="300" style="border:0;border-radius:20px"></iframe> </div>
+    </section>
+    <section id="rsvp">
+        <h2 data-aos="fade-up">RSVP</h2>
+        <div class="divider"></div>
+        <div class="event-box" data-aos="fade-up">
+            <form method="post"> <input type="hidden" name="rsvp" value="1"> <input name="nama" placeholder="Nama Anda" required style="width:100%;padding:12px;margin-bottom:15px"> <button style="padding:12px 30px;background:var(--pink);border:none;border-radius:30px;color:#fff">Kirim</button> </form>
+        </div>
+    </section>
+
+    <!-- FLOATING NAV -->
+    <div class="floating-nav">
+        <button onclick="scrollToSection('wedding-of')">💍</button>
+        <button onclick="scrollToSection('countdown')">⏳</button>
+        <button onclick="scrollToSection('lovestory')">💖</button>
+        <button onclick="scrollToSection('gallery')">🖼️</button>
+        <button onclick="scrollToSection('maps')">📍</button>
+        <button onclick="scrollToSection('rsvp')">✉️</button>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true
+        });
+
+        function openInvitation() {
+            document.getElementById('opening').classList.add('hide');
+            document.body.classList.remove('lock-scroll');
+            startPetals();
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            el.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        const t = new Date('<?= $tanggal ?>T08:00').getTime();
+        const d = document.getElementById('cd-days');
+        const h = document.getElementById('cd-hours');
+        const m = document.getElementById('cd-mins');
+        const s = document.getElementById('cd-secs');
+
+        setInterval(() => {
+            const diff = t - Date.now();
+            if (diff <= 0) return;
+            d.innerText = Math.floor(diff / 864e5);
+            h.innerText = Math.floor(diff / 36e5) % 24;
+            m.innerText = Math.floor(diff / 6e4) % 60;
+            s.innerText = Math.floor(diff / 1e3) % 60;
+        }, 1000);
+
+        function startPetals() {
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'petal';
+                p.innerText = '🌸';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = 5 + Math.random() * 5 + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 10000);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
